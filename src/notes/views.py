@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 
 
@@ -36,3 +36,9 @@ def register(request):
         'form': form
     }
     return render(request, 'notes/register.html', context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+

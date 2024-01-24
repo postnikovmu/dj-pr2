@@ -9,4 +9,5 @@ urlpatterns = [
     path('add_note/', views.add_note, name='add_note'),
     path('add_note/', views.add_note, name='add_note'),
     path('login/', auth_views.LoginView.as_view(template_name="notes/login.html")),
+    path('logout/', views.logout_view, name="logout"),
 ]
