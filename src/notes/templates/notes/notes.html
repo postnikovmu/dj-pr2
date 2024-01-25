@@ -1,0 +1,26 @@
+{% extends "notes/base.html" %}
+
+{% block content %}
+
+<div>
+    <h2>Notes</h2>
+    <table>
+        <thead>
+        <tr>
+            <th><h2>note</h2></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for note in notes %}
+        <tr>
+            <td>
+                {{ note.text }}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

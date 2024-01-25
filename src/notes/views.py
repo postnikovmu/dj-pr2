@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from .models import Note
 
 
 # Create your views here.
@@ -10,8 +11,18 @@ def home(request):
     print('home')
     return render(request, 'notes/home.html')
 
+
 def add_note(request):
     print('add_note')
+
+
+def notes(request):
+
+    notes = Note.objects.filter(user=request.user)
+    context = {
+        'notes': notes
+    }
+    return render(request, 'notes/notes.html', context)
 
 
 def register(request):
@@ -41,4 +52,3 @@ def register(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
-
