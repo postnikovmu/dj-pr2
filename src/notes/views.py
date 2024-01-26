@@ -17,8 +17,6 @@ def add_note(request):
         form = NoteForm(request.POST)
         if form.is_valid():
             text = form.cleaned_data.get('text')
-            text1 = form.data.get('text')
-            print(text, text1)
             note = Note(text=text, user=request.user)
             note.save()
     else:
