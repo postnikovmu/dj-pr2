@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, NoteForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .models import Note
@@ -8,14 +8,28 @@ from .models import Note
 # Create your views here.
 @login_required()
 def home(request):
-    print('home')
     return render(request, 'notes/home.html')
 
 
+@login_required()
 def add_note(request):
-    print('add_note')
+    if request.method == 'POST':
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data.get('text')
+            text1 = form.data.get('text')
+            print(text, text1)
+            note = Note(text=text, user=request.user)
+            note.save()
+    else:
+        form = NoteForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'notes/addnote.html', context)
 
 
+@login_required()
 def notes(request):
 
     notes = Note.objects.filter(user=request.user)
@@ -26,11 +40,9 @@ def notes(request):
 
 
 def register(request):
-    print('start', request.POST)
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            print('valid')
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')

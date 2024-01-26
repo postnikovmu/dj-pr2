@@ -8,8 +8,7 @@ from .models import User, Note
 admin.site.register(User, UserAdmin)
 
 
+@admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(Note, NoteAdmin)
+    fields = ["text", "user"]
+    list_display = ["pk", "text", "user"]
